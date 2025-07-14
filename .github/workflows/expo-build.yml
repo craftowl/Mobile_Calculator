@@ -44,12 +44,12 @@ jobs:
       - name: Expo prebuild (Android)
         run: |
           # AndroidプロジェクトのプリビルドをWebサポート無しで実行
-          npx expo prebuild --platform android --no-install --clear
+          npx expo prebuild --platform android --no-install --clean
 
       - name: Expo prebuild (iOS)
         run: |
           # iOSプロジェクトのプリビルドをWebサポート無しで実行
-          npx expo prebuild --platform ios --no-install --clear
+          npx expo prebuild --platform ios --no-install --clean
 
       - name: Check build configuration
         run: |
