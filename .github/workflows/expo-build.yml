@@ -1,0 +1,64 @@
+name: Expo Build Check
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8.6.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.0.0
+          cache: "pnpm"
+
+      - name: Install dependencies
+        shell: bash
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Format check
+        run: pnpm run format
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Setup Expo CLI
+        run: pnpm install -g @expo/cli
+
+      - name: Expo prebuild (Android)
+        run: |
+          # AndroidプロジェクトのプリビルドをWebサポート無しで実行
+          npx expo prebuild --platform android --no-install --clear
+
+      - name: Expo prebuild (iOS)
+        run: |
+          # iOSプロジェクトのプリビルドをWebサポート無しで実行
+          npx expo prebuild --platform ios --no-install --clear
+
+      - name: Check build configuration
+        run: |
+          # ビルド設定ファイルの存在確認
+          echo "Android build files:"
+          ls -la android/ || echo "Android directory not found"
+          echo "iOS build files:"
+          ls -la ios/ || echo "iOS directory not found"
+          
+          # app.jsonとexpo設定の確認
+          echo "Expo configuration:"
+          cat app.json

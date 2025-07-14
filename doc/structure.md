@@ -250,6 +250,16 @@
 - iOSネイティブ電卓アプリのUI/UXを参考
 - 責任分離の原則（画面・ユーティリティ・ナビゲーション）
 
+### /.github/workflows/expo-build.yml
+**概要**: Expoビルドチェック用GitHub Actionsワークフロー  
+**機能**: 
+- プッシュ・プルリクエスト時の自動ビルドチェック
+- 依存関係のインストール
+- Lint、Format、Typecheckの実行
+- Expo CLI のセットアップ
+- Android/iOS向けのprebuild実行
+- ビルド設定ファイルの確認
+
 ## アーキテクチャパターン
 
 ### データフロー
