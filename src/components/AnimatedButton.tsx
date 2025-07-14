@@ -108,11 +108,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = ({
         ]}
       >
         <Text
-          style={[
-            getTextStyle(),
-            textStyle,
-            disabled && styles.disabledText,
-          ]}
+          style={[getTextStyle(), textStyle, disabled && styles.disabledText]}
         >
           {title}
         </Text>

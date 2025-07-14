@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Switch, Alert } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Switch,
+  Alert,
+} from 'react-native';
 import { useTheme } from '../contexts/ThemeContext';
 import { clearAllHistory } from '../utils/historyUtils';
-import { 
-  getDecimalPlaces, 
-  setDecimalPlaces, 
-  getHistoryLimit, 
-  setHistoryLimit 
+import {
+  getDecimalPlaces,
+  setDecimalPlaces,
+  getHistoryLimit,
+  setHistoryLimit,
 } from '../utils/settingsUtils';
 
 // 設定画面のコンポーネント
@@ -25,7 +33,7 @@ export default function SettingsScreen() {
     try {
       const savedDecimalPlaces = await getDecimalPlaces();
       const savedHistoryLimit = await getHistoryLimit();
-      
+
       setDecimalPlaces(savedDecimalPlaces);
       setHistoryLimit(savedHistoryLimit);
     } catch (error) {
@@ -70,16 +78,26 @@ export default function SettingsScreen() {
             } catch (error) {
               Alert.alert('エラー', '履歴の削除に失敗しました。');
             }
-          }
-        }
+          },
+        },
       ]
     );
   };
 
   // 設定項目をレンダリング
   const renderSettingItem = (title: string, children: React.ReactNode) => (
-    <View style={[styles.settingItem, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
-      <Text style={[styles.settingTitle, { color: theme.colors.text }]}>{title}</Text>
+    <View
+      style={[
+        styles.settingItem,
+        {
+          backgroundColor: theme.colors.surface,
+          borderBottomColor: theme.colors.border,
+        },
+      ]}
+    >
+      <Text style={[styles.settingTitle, { color: theme.colors.text }]}>
+        {title}
+      </Text>
       {children}
     </View>
   );
@@ -98,9 +116,12 @@ export default function SettingsScreen() {
           style={[
             styles.numberOption,
             {
-              backgroundColor: currentValue === option ? theme.colors.primary : theme.colors.background,
+              backgroundColor:
+                currentValue === option
+                  ? theme.colors.primary
+                  : theme.colors.background,
               borderColor: theme.colors.border,
-            }
+            },
           ]}
           onPress={() => onSelect(option)}
         >
@@ -109,10 +130,11 @@ export default function SettingsScreen() {
               styles.numberOptionText,
               {
                 color: currentValue === option ? '#fff' : theme.colors.text,
-              }
+              },
             ]}
           >
-            {option}{suffix}
+            {option}
+            {suffix}
           </Text>
         </TouchableOpacity>
       ))}
@@ -120,10 +142,14 @@ export default function SettingsScreen() {
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       {/* ヘッダー */}
       <View style={styles.header}>
-        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>設定</Text>
+        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
+          設定
+        </Text>
       </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -131,7 +157,9 @@ export default function SettingsScreen() {
         {renderSettingItem(
           'テーマ',
           <View style={styles.themeSelector}>
-            <Text style={[styles.themeLabel, { color: theme.colors.textSecondary }]}>
+            <Text
+              style={[styles.themeLabel, { color: theme.colors.textSecondary }]}
+            >
               {themeType === 'light' ? 'ライトモード' : 'ダークモード'}
             </Text>
             <Switch
@@ -170,13 +198,19 @@ export default function SettingsScreen() {
 
         {/* データ管理 */}
         <View style={[styles.section, { borderTopColor: theme.colors.border }]}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>データ管理</Text>
-          
+          <Text
+            style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}
+          >
+            データ管理
+          </Text>
+
           <TouchableOpacity
             style={[styles.dangerButton, { borderColor: theme.colors.error }]}
             onPress={handleClearAllHistory}
           >
-            <Text style={[styles.dangerButtonText, { color: theme.colors.error }]}>
+            <Text
+              style={[styles.dangerButtonText, { color: theme.colors.error }]}
+            >
               すべての履歴を削除
             </Text>
           </TouchableOpacity>
@@ -184,16 +218,34 @@ export default function SettingsScreen() {
 
         {/* アプリ情報 */}
         <View style={[styles.section, { borderTopColor: theme.colors.border }]}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>アプリ情報</Text>
-          
+          <Text
+            style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}
+          >
+            アプリ情報
+          </Text>
+
           {renderSettingItem(
             'バージョン',
-            <Text style={[styles.versionText, { color: theme.colors.textSecondary }]}>1.0.0</Text>
+            <Text
+              style={[
+                styles.versionText,
+                { color: theme.colors.textSecondary },
+              ]}
+            >
+              1.0.0
+            </Text>
           )}
-          
+
           {renderSettingItem(
             '開発者',
-            <Text style={[styles.developerText, { color: theme.colors.textSecondary }]}>Claude Code</Text>
+            <Text
+              style={[
+                styles.developerText,
+                { color: theme.colors.textSecondary },
+              ]}
+            >
+              Claude Code
+            </Text>
           )}
         </View>
       </ScrollView>

@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import type { NavigationProp } from '@react-navigation/native';
 import { useTheme } from '../contexts/ThemeContext';
-import { 
-  getCalculationHistory, 
-  deleteHistoryItem as deleteHistoryItemUtil, 
+import {
+  getCalculationHistory,
+  deleteHistoryItem as deleteHistoryItemUtil,
   clearAllHistory as clearAllHistoryUtil,
-  CalculationHistory 
+  CalculationHistory,
 } from '../utils/historyUtils';
 import { RootTabParamList } from '../types/navigation';
 
@@ -37,35 +44,31 @@ export default function HistoryScreen() {
   // 履歴項目をタップした時の処理（再計算機能）
   const onHistoryItemPress = (item: CalculationHistory) => {
     // 標準電卓画面に遷移して、結果を設定
-    navigation.navigate('Standard', { 
-      recalculateValue: item.result 
+    navigation.navigate('Standard', {
+      recalculateValue: item.result,
     });
   };
 
   // 履歴項目を削除
   const deleteHistoryItem = (id: string) => {
-    Alert.alert(
-      '削除確認',
-      'この履歴項目を削除しますか？',
-      [
-        { text: 'キャンセル', style: 'cancel' },
-        {
-          text: '削除',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              console.log('削除開始 - ID:', id);
-              await deleteHistoryItemUtil(id);
-              console.log('削除完了、履歴を再読み込み');
-              await loadHistory(); // 履歴を再読み込み
-            } catch (error) {
-              console.error('履歴削除でエラーが発生:', error);
-              Alert.alert('エラー', '履歴の削除に失敗しました。');
-            }
+    Alert.alert('削除確認', 'この履歴項目を削除しますか？', [
+      { text: 'キャンセル', style: 'cancel' },
+      {
+        text: '削除',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            console.log('削除開始 - ID:', id);
+            await deleteHistoryItemUtil(id);
+            console.log('削除完了、履歴を再読み込み');
+            await loadHistory(); // 履歴を再読み込み
+          } catch (error) {
+            console.error('履歴削除でエラーが発生:', error);
+            Alert.alert('エラー', '履歴の削除に失敗しました。');
           }
-        }
-      ]
-    );
+        },
+      },
+    ]);
   };
 
   // 全履歴を削除
@@ -88,8 +91,8 @@ export default function HistoryScreen() {
               console.error('全履歴削除でエラーが発生:', error);
               Alert.alert('エラー', '履歴の削除に失敗しました。');
             }
-          }
-        }
+          },
+        },
       ]
     );
   };
@@ -115,27 +118,47 @@ export default function HistoryScreen() {
 
   // 履歴項目をレンダリング
   const renderHistoryItem = ({ item }: { item: CalculationHistory }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={[styles.historyItem, { backgroundColor: theme.colors.surface }]}
       onPress={() => onHistoryItemPress(item)}
       onLongPress={() => deleteHistoryItem(item.id)}
       activeOpacity={0.7}
     >
       <View style={styles.historyContent}>
-        <Text style={[styles.expressionText, { color: theme.colors.textSecondary }]}>{item.expression}</Text>
-        <Text style={[styles.resultText, { color: theme.colors.text }]}>= {item.result}</Text>
+        <Text
+          style={[styles.expressionText, { color: theme.colors.textSecondary }]}
+        >
+          {item.expression}
+        </Text>
+        <Text style={[styles.resultText, { color: theme.colors.text }]}>
+          = {item.result}
+        </Text>
       </View>
-      <Text style={[styles.timestampText, { color: theme.colors.textSecondary }]}>{formatDate(item.timestamp)}</Text>
+      <Text
+        style={[styles.timestampText, { color: theme.colors.textSecondary }]}
+      >
+        {formatDate(item.timestamp)}
+      </Text>
     </TouchableOpacity>
   );
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       {/* ヘッダー */}
       <View style={styles.header}>
-        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>計算履歴</Text>
+        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
+          計算履歴
+        </Text>
         {history.length > 0 && (
-          <TouchableOpacity onPress={clearAllHistory} style={[styles.clearButton, { backgroundColor: theme.colors.error }]}>
+          <TouchableOpacity
+            onPress={clearAllHistory}
+            style={[
+              styles.clearButton,
+              { backgroundColor: theme.colors.error },
+            ]}
+          >
             <Text style={styles.clearButtonText}>全削除</Text>
           </TouchableOpacity>
         )}
@@ -144,8 +167,16 @@ export default function HistoryScreen() {
       {/* 履歴リスト */}
       {history.length === 0 ? (
         <View style={styles.emptyContainer}>
-          <Text style={[styles.emptyText, { color: theme.colors.textSecondary }]}>履歴がありません</Text>
-          <Text style={[styles.emptySubText, { color: theme.colors.textSecondary }]}>計算を行うと履歴が表示されます</Text>
+          <Text
+            style={[styles.emptyText, { color: theme.colors.textSecondary }]}
+          >
+            履歴がありません
+          </Text>
+          <Text
+            style={[styles.emptySubText, { color: theme.colors.textSecondary }]}
+          >
+            計算を行うと履歴が表示されます
+          </Text>
         </View>
       ) : (
         <FlatList
@@ -160,8 +191,20 @@ export default function HistoryScreen() {
 
       {/* 操作説明 */}
       {history.length > 0 && (
-        <View style={[styles.instructionContainer, { borderTopColor: theme.colors.border }]}>
-          <Text style={[styles.instructionText, { color: theme.colors.textSecondary }]}>タップで再利用 · 長押しで削除</Text>
+        <View
+          style={[
+            styles.instructionContainer,
+            { borderTopColor: theme.colors.border },
+          ]}
+        >
+          <Text
+            style={[
+              styles.instructionText,
+              { color: theme.colors.textSecondary },
+            ]}
+          >
+            タップで再利用 · 長押しで削除
+          </Text>
         </View>
       )}
     </View>

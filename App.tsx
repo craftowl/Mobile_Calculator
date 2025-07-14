@@ -51,7 +51,7 @@ function AppNavigator() {
             ),
           }}
         />
-        
+
         {/* 科学電卓タブ */}
         <Tab.Screen
           name="Scientific"
@@ -63,7 +63,7 @@ function AppNavigator() {
             ),
           }}
         />
-        
+
         {/* 履歴タブ */}
         <Tab.Screen
           name="History"
@@ -75,7 +75,7 @@ function AppNavigator() {
             ),
           }}
         />
-        
+
         {/* 設定タブ */}
         <Tab.Screen
           name="Settings"
@@ -105,25 +105,53 @@ export default function App() {
 
 // タブアイコンコンポーネント（絵文字を使用）
 const CalculatorIcon = ({ color, size }: { color: string; size: number }) => (
-  <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+  <View
+    style={{
+      width: size,
+      height: size,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
     <Text style={{ fontSize: size * 0.8, color }}>📱</Text>
   </View>
 );
 
 const ScientificIcon = ({ color, size }: { color: string; size: number }) => (
-  <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+  <View
+    style={{
+      width: size,
+      height: size,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
     <Text style={{ fontSize: size * 0.8, color }}>🔬</Text>
   </View>
 );
 
 const HistoryIcon = ({ color, size }: { color: string; size: number }) => (
-  <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+  <View
+    style={{
+      width: size,
+      height: size,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
     <Text style={{ fontSize: size * 0.8, color }}>📋</Text>
   </View>
 );
 
 const SettingsIcon = ({ color, size }: { color: string; size: number }) => (
-  <View style={{ width: size, height: size, justifyContent: 'center', alignItems: 'center' }}>
+  <View
+    style={{
+      width: size,
+      height: size,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+  >
     <Text style={{ fontSize: size * 0.8, color }}>⚙️</Text>
   </View>
 );

@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
-import { saveCalculationHistory, formatExpression } from '../utils/historyUtils';
+import {
+  saveCalculationHistory,
+  formatExpression,
+} from '../utils/historyUtils';
 import { RootTabParamList } from '../types/navigation';
 import { useTheme } from '../contexts/ThemeContext';
 import { AnimatedButton } from '../components/AnimatedButton';
 import { formatNumber, getDecimalPlaces } from '../utils/settingsUtils';
 
-type StandardCalculatorScreenRouteProp = RouteProp<RootTabParamList, 'Standard'>;
+type StandardCalculatorScreenRouteProp = RouteProp<
+  RootTabParamList,
+  'Standard'
+>;
 
 // 標準電卓画面のコンポーネント
 export default function StandardCalculatorScreen() {
   const route = useRoute<StandardCalculatorScreenRouteProp>();
   const { theme } = useTheme();
-  
+
   // 計算機の状態管理
   const [display, setDisplay] = useState('0'); // 表示値
   const [previousValue, setPreviousValue] = useState<number | null>(null); // 前の値
@@ -87,7 +93,11 @@ export default function StandardCalculatorScreen() {
   };
 
   // 計算処理
-  const calculate = (firstValue: number, secondValue: number, operation: string): number => {
+  const calculate = (
+    firstValue: number,
+    secondValue: number,
+    operation: string
+  ): number => {
     switch (operation) {
       case '+':
         return firstValue + secondValue;
@@ -110,10 +120,10 @@ export default function StandardCalculatorScreen() {
       const newValue = calculate(previousValue, inputValue, operation);
       const expression = formatExpression(previousValue, operation, display);
       const formattedResult = formatNumber(newValue, decimalPlaces);
-      
+
       // 履歴に保存
       await saveCalculationHistory(expression, formattedResult);
-      
+
       setDisplay(formattedResult);
       setPreviousValue(null);
       setOperation(null);
@@ -122,10 +132,14 @@ export default function StandardCalculatorScreen() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       {/* 表示エリア */}
       <View style={styles.displayContainer}>
-        <Text style={[styles.displayText, { color: theme.colors.text }]}>{display}</Text>
+        <Text style={[styles.displayText, { color: theme.colors.text }]}>
+          {display}
+        </Text>
       </View>
 
       {/* ボタンエリア */}
@@ -135,38 +149,90 @@ export default function StandardCalculatorScreen() {
           <AnimatedButton title="AC" onPress={clear} type="function" />
           <AnimatedButton title="+/-" onPress={() => {}} type="function" />
           <AnimatedButton title="%" onPress={() => {}} type="function" />
-          <AnimatedButton title="÷" onPress={() => performOperation('÷')} type="operator" />
+          <AnimatedButton
+            title="÷"
+            onPress={() => performOperation('÷')}
+            type="operator"
+          />
         </View>
 
         {/* 2行目: 7, 8, 9, × */}
         <View style={styles.row}>
-          <AnimatedButton title="7" onPress={() => inputNumber('7')} type="number" />
-          <AnimatedButton title="8" onPress={() => inputNumber('8')} type="number" />
-          <AnimatedButton title="9" onPress={() => inputNumber('9')} type="number" />
-          <AnimatedButton title="×" onPress={() => performOperation('×')} type="operator" />
+          <AnimatedButton
+            title="7"
+            onPress={() => inputNumber('7')}
+            type="number"
+          />
+          <AnimatedButton
+            title="8"
+            onPress={() => inputNumber('8')}
+            type="number"
+          />
+          <AnimatedButton
+            title="9"
+            onPress={() => inputNumber('9')}
+            type="number"
+          />
+          <AnimatedButton
+            title="×"
+            onPress={() => performOperation('×')}
+            type="operator"
+          />
         </View>
 
         {/* 3行目: 4, 5, 6, - */}
         <View style={styles.row}>
-          <AnimatedButton title="4" onPress={() => inputNumber('4')} type="number" />
-          <AnimatedButton title="5" onPress={() => inputNumber('5')} type="number" />
-          <AnimatedButton title="6" onPress={() => inputNumber('6')} type="number" />
-          <AnimatedButton title="-" onPress={() => performOperation('-')} type="operator" />
+          <AnimatedButton
+            title="4"
+            onPress={() => inputNumber('4')}
+            type="number"
+          />
+          <AnimatedButton
+            title="5"
+            onPress={() => inputNumber('5')}
+            type="number"
+          />
+          <AnimatedButton
+            title="6"
+            onPress={() => inputNumber('6')}
+            type="number"
+          />
+          <AnimatedButton
+            title="-"
+            onPress={() => performOperation('-')}
+            type="operator"
+          />
         </View>
 
         {/* 4行目: 1, 2, 3, + */}
         <View style={styles.row}>
-          <AnimatedButton title="1" onPress={() => inputNumber('1')} type="number" />
-          <AnimatedButton title="2" onPress={() => inputNumber('2')} type="number" />
-          <AnimatedButton title="3" onPress={() => inputNumber('3')} type="number" />
-          <AnimatedButton title="+" onPress={() => performOperation('+')} type="operator" />
+          <AnimatedButton
+            title="1"
+            onPress={() => inputNumber('1')}
+            type="number"
+          />
+          <AnimatedButton
+            title="2"
+            onPress={() => inputNumber('2')}
+            type="number"
+          />
+          <AnimatedButton
+            title="3"
+            onPress={() => inputNumber('3')}
+            type="number"
+          />
+          <AnimatedButton
+            title="+"
+            onPress={() => performOperation('+')}
+            type="operator"
+          />
         </View>
 
         {/* 5行目: 0, ., = */}
         <View style={styles.row}>
-          <AnimatedButton 
-            title="0" 
-            onPress={() => inputNumber('0')} 
+          <AnimatedButton
+            title="0"
+            onPress={() => inputNumber('0')}
             type="number"
             style={styles.zeroButton}
           />

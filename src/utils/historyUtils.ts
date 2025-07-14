@@ -13,11 +13,14 @@ export interface CalculationHistory {
 const HISTORY_STORAGE_KEY = 'calculatorHistory';
 
 // 履歴を保存する関数
-export const saveCalculationHistory = async (expression: string, result: string): Promise<void> => {
+export const saveCalculationHistory = async (
+  expression: string,
+  result: string
+): Promise<void> => {
   try {
     // 現在の履歴を取得
     const existingHistory = await getCalculationHistory();
-    
+
     // 新しい履歴項目を作成
     const newHistoryItem: CalculationHistory = {
       id: Date.now().toString(),
@@ -25,25 +28,30 @@ export const saveCalculationHistory = async (expression: string, result: string)
       result,
       timestamp: new Date(),
     };
-    
+
     // 履歴リストの先頭に追加（最新が上に来るように）
     const updatedHistory = [newHistoryItem, ...existingHistory];
-    
+
     // 設定された履歴保存件数を取得
     const historyLimit = await getHistoryLimit();
-    
+
     // 履歴の最大件数を制限
     const limitedHistory = updatedHistory.slice(0, historyLimit);
-    
+
     // AsyncStorageに保存
-    await AsyncStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(limitedHistory));
+    await AsyncStorage.setItem(
+      HISTORY_STORAGE_KEY,
+      JSON.stringify(limitedHistory)
+    );
   } catch (error) {
     console.error('履歴の保存に失敗しました:', error);
   }
 };
 
 // 履歴を取得する関数
-export const getCalculationHistory = async (): Promise<CalculationHistory[]> => {
+export const getCalculationHistory = async (): Promise<
+  CalculationHistory[]
+> => {
   try {
     const historyJson = await AsyncStorage.getItem(HISTORY_STORAGE_KEY);
     if (historyJson) {
@@ -51,7 +59,7 @@ export const getCalculationHistory = async (): Promise<CalculationHistory[]> => 
       // timestampをDate型に変換
       return parsedHistory.map((item: any) => ({
         ...item,
-        timestamp: new Date(item.timestamp)
+        timestamp: new Date(item.timestamp),
       }));
     }
     return [];
@@ -67,12 +75,18 @@ export const deleteHistoryItem = async (id: string): Promise<void> => {
     console.log('削除対象ID:', id);
     const existingHistory = await getCalculationHistory();
     console.log('削除前の履歴件数:', existingHistory.length);
-    console.log('履歴のID一覧:', existingHistory.map(item => item.id));
-    
-    const updatedHistory = existingHistory.filter(item => item.id !== id);
+    console.log(
+      '履歴のID一覧:',
+      existingHistory.map((item) => item.id)
+    );
+
+    const updatedHistory = existingHistory.filter((item) => item.id !== id);
     console.log('削除後の履歴件数:', updatedHistory.length);
-    
-    await AsyncStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(updatedHistory));
+
+    await AsyncStorage.setItem(
+      HISTORY_STORAGE_KEY,
+      JSON.stringify(updatedHistory)
+    );
     console.log('履歴の削除が完了しました');
   } catch (error) {
     console.error('履歴項目の削除に失敗しました:', error);

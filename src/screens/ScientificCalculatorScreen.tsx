@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { saveCalculationHistory, formatExpression } from '../utils/historyUtils';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import {
+  saveCalculationHistory,
+  formatExpression,
+} from '../utils/historyUtils';
 
 // 科学電卓画面のコンポーネント
 export default function ScientificCalculatorScreen() {
@@ -155,7 +164,11 @@ export default function ScientificCalculatorScreen() {
   };
 
   // 計算処理
-  const calculate = (firstValue: number, secondValue: number, operation: string): number => {
+  const calculate = (
+    firstValue: number,
+    secondValue: number,
+    operation: string
+  ): number => {
     switch (operation) {
       case '+':
         return firstValue + secondValue;
@@ -179,10 +192,10 @@ export default function ScientificCalculatorScreen() {
     if (previousValue !== null && operation) {
       const newValue = calculate(previousValue, inputValue, operation);
       const expression = formatExpression(previousValue, operation, display);
-      
+
       // 履歴に保存
       await saveCalculationHistory(expression, String(newValue));
-      
+
       setDisplay(String(newValue));
       setPreviousValue(null);
       setOperation(null);
@@ -202,64 +215,112 @@ export default function ScientificCalculatorScreen() {
       <View style={styles.buttonContainer}>
         {/* 1行目: メモリ操作 */}
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => memoryOperation('MC')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => memoryOperation('MC')}
+          >
             <Text style={styles.scientificButtonText}>MC</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => memoryOperation('MR')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => memoryOperation('MR')}
+          >
             <Text style={styles.scientificButtonText}>MR</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => memoryOperation('M+')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => memoryOperation('M+')}
+          >
             <Text style={styles.scientificButtonText}>M+</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => memoryOperation('M-')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => memoryOperation('M-')}
+          >
             <Text style={styles.scientificButtonText}>M-</Text>
           </TouchableOpacity>
         </View>
 
         {/* 2行目: 三角関数 */}
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => performScientificOperation('sin')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => performScientificOperation('sin')}
+          >
             <Text style={styles.scientificButtonText}>sin</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => performScientificOperation('cos')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => performScientificOperation('cos')}
+          >
             <Text style={styles.scientificButtonText}>cos</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => performScientificOperation('tan')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => performScientificOperation('tan')}
+          >
             <Text style={styles.scientificButtonText}>tan</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => performScientificOperation('log')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => performScientificOperation('log')}
+          >
             <Text style={styles.scientificButtonText}>log</Text>
           </TouchableOpacity>
         </View>
 
         {/* 3行目: 対数・ルート・べき乗 */}
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => performScientificOperation('ln')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => performScientificOperation('ln')}
+          >
             <Text style={styles.scientificButtonText}>ln</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => performScientificOperation('sqrt')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => performScientificOperation('sqrt')}
+          >
             <Text style={styles.scientificButtonText}>√</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => performScientificOperation('square')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => performScientificOperation('square')}
+          >
             <Text style={styles.scientificButtonText}>x²</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => performOperation('^')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => performOperation('^')}
+          >
             <Text style={styles.scientificButtonText}>x^y</Text>
           </TouchableOpacity>
         </View>
 
         {/* 4行目: 定数・階乗 */}
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => inputConstant('pi')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => inputConstant('pi')}
+          >
             <Text style={styles.scientificButtonText}>π</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => inputConstant('e')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => inputConstant('e')}
+          >
             <Text style={styles.scientificButtonText}>e</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.scientificButton]} onPress={() => performScientificOperation('factorial')}>
+          <TouchableOpacity
+            style={[styles.button, styles.scientificButton]}
+            onPress={() => performScientificOperation('factorial')}
+          >
             <Text style={styles.scientificButtonText}>n!</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.functionButton]} onPress={clear}>
+          <TouchableOpacity
+            style={[styles.button, styles.functionButton]}
+            onPress={clear}
+          >
             <Text style={styles.functionButtonText}>AC</Text>
           </TouchableOpacity>
         </View>
@@ -267,64 +328,112 @@ export default function ScientificCalculatorScreen() {
         {/* 標準電卓部分 */}
         {/* 5行目: 7, 8, 9, ÷ */}
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={() => inputNumber('7')}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={() => inputNumber('7')}
+          >
             <Text style={styles.numberButtonText}>7</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={() => inputNumber('8')}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={() => inputNumber('8')}
+          >
             <Text style={styles.numberButtonText}>8</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={() => inputNumber('9')}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={() => inputNumber('9')}
+          >
             <Text style={styles.numberButtonText}>9</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.operatorButton]} onPress={() => performOperation('÷')}>
+          <TouchableOpacity
+            style={[styles.button, styles.operatorButton]}
+            onPress={() => performOperation('÷')}
+          >
             <Text style={styles.operatorButtonText}>÷</Text>
           </TouchableOpacity>
         </View>
 
         {/* 6行目: 4, 5, 6, × */}
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={() => inputNumber('4')}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={() => inputNumber('4')}
+          >
             <Text style={styles.numberButtonText}>4</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={() => inputNumber('5')}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={() => inputNumber('5')}
+          >
             <Text style={styles.numberButtonText}>5</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={() => inputNumber('6')}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={() => inputNumber('6')}
+          >
             <Text style={styles.numberButtonText}>6</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.operatorButton]} onPress={() => performOperation('×')}>
+          <TouchableOpacity
+            style={[styles.button, styles.operatorButton]}
+            onPress={() => performOperation('×')}
+          >
             <Text style={styles.operatorButtonText}>×</Text>
           </TouchableOpacity>
         </View>
 
         {/* 7行目: 1, 2, 3, - */}
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={() => inputNumber('1')}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={() => inputNumber('1')}
+          >
             <Text style={styles.numberButtonText}>1</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={() => inputNumber('2')}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={() => inputNumber('2')}
+          >
             <Text style={styles.numberButtonText}>2</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={() => inputNumber('3')}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={() => inputNumber('3')}
+          >
             <Text style={styles.numberButtonText}>3</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.operatorButton]} onPress={() => performOperation('-')}>
+          <TouchableOpacity
+            style={[styles.button, styles.operatorButton]}
+            onPress={() => performOperation('-')}
+          >
             <Text style={styles.operatorButtonText}>-</Text>
           </TouchableOpacity>
         </View>
 
         {/* 8行目: 0, ., =, + */}
         <View style={styles.row}>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={() => inputNumber('0')}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={() => inputNumber('0')}
+          >
             <Text style={styles.numberButtonText}>0</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.numberButton]} onPress={inputDecimal}>
+          <TouchableOpacity
+            style={[styles.button, styles.numberButton]}
+            onPress={inputDecimal}
+          >
             <Text style={styles.numberButtonText}>.</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.operatorButton]} onPress={onEqualPress}>
+          <TouchableOpacity
+            style={[styles.button, styles.operatorButton]}
+            onPress={onEqualPress}
+          >
             <Text style={styles.operatorButtonText}>=</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.operatorButton]} onPress={() => performOperation('+')}>
+          <TouchableOpacity
+            style={[styles.button, styles.operatorButton]}
+            onPress={() => performOperation('+')}
+          >
             <Text style={styles.operatorButtonText}>+</Text>
           </TouchableOpacity>
         </View>
