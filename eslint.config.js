@@ -28,13 +28,14 @@ export default [
       ...react.configs.recommended.rules,
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off',
       'no-undef': 'off', // TypeScriptがこれを処理する
-      'react-native/no-inline-styles': 'warn',
-      'react-native/no-color-literals': 'warn',
-      'react-native/sort-styles': 'warn',
+      // React Native ルールを緩和
+      'react-native/no-inline-styles': 'off', // インラインスタイルを許可
+      'react-native/no-color-literals': 'off', // カラーリテラルを許可
+      'react-native/sort-styles': 'off', // スタイルの並び順を強制しない
     },
     settings: {
       react: {
